@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+// User মডেল ইমপোর্ট করা হলো যাতে populate('company') কাজ করে
+import User from './User';
 
 const JobSchema = new mongoose.Schema(
   {
@@ -24,4 +26,5 @@ const JobSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// মডেলটি ইতিমধ্যে রেজিস্টার্ড থাকলে সেটি ব্যবহার করা হবে, নাহলে নতুন তৈরি হবে
 export default mongoose.models.Job || mongoose.model('Job', JobSchema);
