@@ -1,26 +1,192 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #9b59b6;
+  --color-primary-dark: #8e44ad;
+  --color-primary-light: #af7ac5;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-background: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --bg-background: #0f0f13;
+  --bg-surface: #18181f;
+  --bg-surface-hover: #22222b;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --border-color: #374151;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-background);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-family: var(--font-bengali);
+  transition: background-color 0.3s, color 0.3s;
 }
+
+/* 
+  ==== Select Dropdown ফিক্স ====
+  ড্রপডাউনের অপশনগুলো যাতে ডার্ক থিমে দেখা যায়
+*/
+select {
+  background-color: var(--bg-background) !important;
+  color: var(--text-primary) !important;
+  appearance: auto;
+}
+
+select option {
+  background-color: #18181f !important;  /* ডার্ক ব্যাকগ্রাউন্ড */
+  color: #f3f4f6 !important;              /* সাদা টেক্সট */
+  padding: 10px;
+}
+
+/* ফায়ারফক্সের জন্য */
+@-moz-document url-prefix() {
+  select option {
+    background-color: #18181f;
+    color: #f3f4f6;
+  }
+}
+
+/* লাইট মোডে অপশনের রঙ */
+html:not(.dark) select option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* অটোফিল ফিক্স */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px var(--bg-background) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-surface); }
+::-webkit-scrollbar-thumb { background: #9b59b6; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #af7ac5; }
+
+/* ===== Custom DatePicker Styles ===== */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker {
+  font-family: var(--font-bengali) !important;
+  background-color: #18181f !important;
+  border: 1px solid #374151 !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+  color: #f3f4f6 !important;
+}
+
+.react-datepicker__header {
+  background-color: #0f0f13 !important;
+  border-bottom: 1px solid #374151 !important;
+  border-top-left-radius: 0.75rem !important;
+  border-top-right-radius: 0.75rem !important;
+  padding-top: 10px !important;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  color: #f3f4f6 !important;
+  font-weight: 600 !important;
+}
+
+.react-datepicker__day-name {
+  color: #9ca3af !important;
+}
+
+.react-datepicker__day {
+  color: #f3f4f6 !important;
+  border-radius: 0.5rem !important;
+  transition: all 0.2s;
+}
+
+.react-datepicker__day:hover {
+  background-color: #9b59b6 !important;
+  color: white !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #9b59b6 !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.react-datepicker__day--today {
+  border: 1px solid #9b59b6 !important;
+  color: #af7ac5 !important;
+}
+
+.react-datepicker__day--outside-month {
+  color: #4b5563 !important;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: #9ca3af !important;
+}
+
+.react-datepicker__navigation:hover *::before {
+  border-color: #af7ac5 !important;
+}
+
+.react-datepicker__year-read-view--down-arrow,
+.react-datepicker__month-read-view--down-arrow {
+  border-top-color: #9ca3af !important;
+}
+
+.react-datepicker__month-dropdown,
+.react-datepicker__year-dropdown {
+  background-color: #18181f !important;
+  border: 1px solid #374151 !important;
+}
+
+.react-datepicker__month-option:hover,
+.react-datepicker__year-option:hover {
+  background-color: #9b59b6 !important;
+}
+
+/* ================= Global Cursor Pointer ================= */
+/* সব বাটন, লিংক, সিলেক্ট এবং ক্লিকযোগ্য এলিমেন্টে হাতের আইকন */
+button, 
+a, 
+select, 
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="checkbox"],
+input[type="radio"],
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+/* ডিজেবল বাটনে নিষ্ক্রিয় কার্সর */
+button:disabled,
+[disabled],
+.disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed !important;
+}
+
+/* টেক্সট ইনপুটে কার্সর টেক্সট */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+textarea {
+  cursor: text;
+}
+/* ========================================================= */
