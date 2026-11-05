@@ -7,9 +7,10 @@ export async function GET(req) {
     await connectDB();
     const { searchParams } = new URL(req.url);
     const search = searchParams.get('search');
-    const limit = parseInt(searchParams.get('limit')) || 50;
+    const limit = parseInt(searchParams.get('limit')) || 20;
 
     let query = { status: 'Published' };
+    
     if (search) {
       query.$or = [
         { title: { $regex: search, $options: 'i' } },
@@ -24,6 +25,7 @@ export async function GET(req) {
 
     return NextResponse.json({ jobs });
   } catch (error) {
+    console.error('Jobs API Error:', error);
     return NextResponse.json({ message: 'Error' }, { status: 500 });
   }
 }
