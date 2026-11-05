@@ -4,7 +4,6 @@ import User from '@/models/User';
 import ArtisanProfile from '@/models/ArtisanProfile';
 import CompanyProfile from '@/models/CompanyProfile';
 
-export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {

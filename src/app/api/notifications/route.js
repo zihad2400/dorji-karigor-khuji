@@ -4,7 +4,6 @@ import Notification from '@/models/Notification';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
-export const dynamic = 'force-dynamic';
 
 // নোটিফিকেশন লিস্ট আনা
 export async function GET() {

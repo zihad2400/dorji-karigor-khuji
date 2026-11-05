@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import { generateBiodataId } from '@/lib/generateBiodataId';
 
-export const dynamic = 'force-dynamic';
 
 export async function POST(req) {
   try {

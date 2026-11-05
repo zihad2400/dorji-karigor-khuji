@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 
-export const dynamic = 'force-dynamic';
 
 export async function POST(req) {
   try {

@@ -3,7 +3,6 @@ import connectDB from '@/lib/db';
 import User from '@/models/User';
 import CompanyProfile from '@/models/CompanyProfile';
 
-export const dynamic = 'force-dynamic';
 
 export async function DELETE(req, { params }) {
   try {

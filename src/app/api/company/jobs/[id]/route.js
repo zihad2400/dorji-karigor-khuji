@@ -4,7 +4,6 @@ import Job from '@/models/Job';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
-export const dynamic = 'force-dynamic';
 
 export async function DELETE(req, { params }) {
   try {

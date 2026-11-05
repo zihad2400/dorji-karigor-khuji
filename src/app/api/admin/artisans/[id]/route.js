@@ -3,7 +3,6 @@ import connectDB from '@/lib/db';
 import User from '@/models/User';
 import ArtisanProfile from '@/models/ArtisanProfile';
 
-export const dynamic = 'force-dynamic';
 
 export async function DELETE(req, { params }) {
   try {
