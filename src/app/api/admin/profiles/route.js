@@ -3,6 +3,8 @@ import connectDB from '@/lib/db';
 import ArtisanProfile from '@/models/ArtisanProfile';
 import Notification from '@/models/Notification';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req) {
   try {
     await connectDB();

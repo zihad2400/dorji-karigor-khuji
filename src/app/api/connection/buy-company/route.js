@@ -6,6 +6,8 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req) {
   try {
     const cookieStore = await cookies();

@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import bcrypt from 'bcryptjs';
 
+export const dynamic = 'force-dynamic';
+
 export async function PUT(req) {
   try {
     const cookieStore = await cookies();
