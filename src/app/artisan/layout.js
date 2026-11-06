@@ -1,17 +1,17 @@
 'use client';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react'; // useState ইমপোর্ট করা হলো
+import { useState } from 'react';
 import { 
-  FiGrid, FiEdit, FiHeart, FiEyeOff, FiStar, 
-  FiShoppingCart, FiSend, FiInbox, FiSettings, 
-  FiLogOut, FiUser, FiSearch
+  FiGrid, FiEdit, FiHeart, FiStar, FiShoppingCart, FiSend, FiInbox, 
+  FiSettings, FiLogOut, FiUser, FiSearch, FiMenu, FiX 
 } from 'react-icons/fi';
 
 export default function ArtisanLayout({ children }) {
   const pathname = usePathname();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // মোবাইল সাইডবার স্টেট
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
@@ -19,7 +19,6 @@ export default function ArtisanLayout({ children }) {
     router.refresh();
   };
 
-  // সার্চ হ্যান্ডলার
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -42,13 +41,30 @@ export default function ArtisanLayout({ children }) {
 
   return (
     <div className="flex min-h-screen bg-background">
-      {/* Sidebar */}
-      <aside className="w-64 bg-surface border-r border-gray-800 hidden md:flex flex-col">
-        <div className="p-6 border-b border-gray-800">
+      
+      {/* ===== মোবাইল সাইডবার ওভারলে ===== */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
+      {/* ===== সাইডবার ===== */}
+      <aside className={`
+        fixed inset-y-0 left-0 z-50 w-64 bg-surface border-r border-gray-800 flex flex-col transform transition-transform duration-300
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        md:relative md:translate-x-0 md:flex
+      `}>
+        <div className="p-6 border-b border-gray-800 flex justify-between items-center">
           <Link href="/" className="text-xl font-bold text-primary-light">দর্জি কারিগর খুঁজি</Link>
+          {/* মোবাইলে ক্লোজ বাটন */}
+          <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-text-secondary">
+            <FiX size={24} />
+          </button>
         </div>
         
-        {/* Search box in sidebar */}
+        {/* Search box */}
         <div className="px-4 py-4">
           <form onSubmit={handleSearch} className="relative">
             <FiSearch className="absolute left-3 top-3 text-gray-500" />
@@ -70,6 +86,7 @@ export default function ArtisanLayout({ children }) {
                 <li key={item.path}>
                   <Link 
                     href={item.path} 
+                    onClick={() => setIsSidebarOpen(false)} // মোবাইলে ক্লিক করলে মেনু বন্ধ হবে
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition ${
                       isActive ? 'bg-primary/20 text-primary-light border-l-4 border-primary' : 'text-text-secondary hover:bg-surfaceHover hover:text-text-primary'
                     }`}
@@ -91,13 +108,14 @@ export default function ArtisanLayout({ children }) {
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-grow">
-        {/* Top bar for mobile/desktop */}
-        <header className="bg-surface border-b border-gray-800 h-16 flex items-center justify-between px-6">
-          <div className="md:hidden">
-             <Link href="/" className="text-lg font-bold text-primary-light">দর্জি কারিগর</Link>
-          </div>
+      {/* ===== মেইন কন্টেন্ট ===== */}
+      <main className="flex-grow flex flex-col min-w-0">
+        <header className="bg-surface border-b border-gray-800 h-16 flex items-center justify-between px-4 sm:px-6">
+          {/* মোবাইল হ্যামবার্গার বাটন */}
+          <button onClick={() => setIsSidebarOpen(true)} className="md:hidden text-text-primary p-2">
+            <FiMenu size={24} />
+          </button>
+          
           <div className="flex items-center gap-4 ml-auto">
             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
               <FiUser size={20} />
@@ -105,7 +123,7 @@ export default function ArtisanLayout({ children }) {
           </div>
         </header>
         
-        <div className="p-6">
+        <div className="p-4 sm:p-6 overflow-x-hidden">
           {children}
         </div>
       </main>
