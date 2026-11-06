@@ -11,7 +11,7 @@ export default function ArtisanLayout({ children }) {
   const pathname = usePathname();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // মোবাইল সাইডবার স্টেট
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
@@ -42,29 +42,27 @@ export default function ArtisanLayout({ children }) {
   return (
     <div className="flex min-h-screen bg-background">
       
-      {/* ===== মোবাইল সাইডবার ওভারলে ===== */}
+      {/* ===== মোবাইল ওভারলে (গাঢ় কালো ব্যাকগ্রাউন্ড) ===== */}
       {isSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black/60 z-40 md:hidden"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
           onClick={() => setIsSidebarOpen(false)}
         ></div>
       )}
 
       {/* ===== সাইডবার ===== */}
       <aside className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-surface border-r border-gray-800 flex flex-col transform transition-transform duration-300
+        fixed inset-y-0 left-0 z-50 w-72 bg-[#121217] border-r border-gray-800 flex flex-col transform transition-transform duration-300 shadow-2xl
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-        md:relative md:translate-x-0 md:flex
+        md:relative md:translate-x-0 md:flex md:shadow-none
       `}>
         <div className="p-6 border-b border-gray-800 flex justify-between items-center">
           <Link href="/" className="text-xl font-bold text-primary-light">দর্জি কারিগর খুঁজি</Link>
-          {/* মোবাইলে ক্লোজ বাটন */}
-          <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-text-secondary">
+          <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-text-secondary hover:text-white">
             <FiX size={24} />
           </button>
         </div>
         
-        {/* Search box */}
         <div className="px-4 py-4">
           <form onSubmit={handleSearch} className="relative">
             <FiSearch className="absolute left-3 top-3 text-gray-500" />
@@ -73,7 +71,7 @@ export default function ArtisanLayout({ children }) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="বায়োডাটা খুঁজুন" 
-              className="w-full bg-background border border-gray-700 rounded-lg py-2 pl-10 pr-3 text-sm text-text-primary focus:outline-none focus:border-primary" 
+              className="w-full bg-[#0a0a0e] border border-gray-700 rounded-lg py-2 pl-10 pr-3 text-sm text-text-primary focus:outline-none focus:border-primary" 
             />
           </form>
         </div>
@@ -86,9 +84,9 @@ export default function ArtisanLayout({ children }) {
                 <li key={item.path}>
                   <Link 
                     href={item.path} 
-                    onClick={() => setIsSidebarOpen(false)} // মোবাইলে ক্লিক করলে মেনু বন্ধ হবে
+                    onClick={() => setIsSidebarOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition ${
-                      isActive ? 'bg-primary/20 text-primary-light border-l-4 border-primary' : 'text-text-secondary hover:bg-surfaceHover hover:text-text-primary'
+                      isActive ? 'bg-primary/20 text-primary-light border-l-4 border-primary' : 'text-text-secondary hover:bg-[#1c1c24] hover:text-text-primary'
                     }`}
                   >
                     <span className="text-lg">{item.icon}</span>
@@ -111,7 +109,6 @@ export default function ArtisanLayout({ children }) {
       {/* ===== মেইন কন্টেন্ট ===== */}
       <main className="flex-grow flex flex-col min-w-0">
         <header className="bg-surface border-b border-gray-800 h-16 flex items-center justify-between px-4 sm:px-6">
-          {/* মোবাইল হ্যামবার্গার বাটন */}
           <button onClick={() => setIsSidebarOpen(true)} className="md:hidden text-text-primary p-2">
             <FiMenu size={24} />
           </button>
